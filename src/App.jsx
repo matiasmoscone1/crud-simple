@@ -37,6 +37,8 @@ function App() {
   const [nuevoColor, setNuevoColor] = useState("");
   const [nuevoModelo, setNuevoModelo] = useState("");
 
+  const [validacion, setValidacion] = useState("");
+
   const nombreInput = useRef(null);
   const colorInput = useRef(null);
   const modeloInput = useRef(null);
@@ -56,11 +58,24 @@ function App() {
       color: nuevoColor,
       modelo: nuevoModelo
     }
+    //Validacion de inputs al agregar producto.
+    if((nuevoNombre && nuevoColor !== "") && (nuevoModelo >= 2000 && nuevoModelo <= 2023)){
+      setProductos([...productos, nuevoArticulo]);
+      setNuevoNombre("");
+      setNuevoColor("");
+      setNuevoModelo("");
+    }else{
+      setValidacion("Debe completar todos los campos antes de agregar un producto");
+      setTimeout(() => {
+        setValidacion("");
+      }, 3000);
+    }
 
-    setProductos([...productos, nuevoArticulo]);
-    setNuevoNombre("");
-    setNuevoColor("");
-    setNuevoModelo("");
+    var input = document.getElementById("validacionModelo");
+
+    input.oninvalid = (e) => e.target.setCustomValidity("El modelo debe ser entre 2000 y 2023");
+    
+
   }
 
   const editarArticulo = (producto) => {
@@ -81,7 +96,6 @@ function App() {
     colorInput.current.value = "";
     modeloInput.current.value = "";
   }
-
 
 
 
@@ -120,21 +134,24 @@ function App() {
         </table>
     </div>
     
-    <div>
-      <input type="text" value={nuevoNombre} placeholder="Nombre del Articulo" onChange={(e) => setNuevoNombre(e.target.value)}/>
-      <input type="text" value={nuevoColor} placeholder="Color" onChange={(e) => setNuevoColor(e.target.value)}/>
-      <input type="text" value={nuevoModelo} placeholder="Modelo" onChange={(e) => setNuevoModelo(e.target.value)}/>
+    <form onSubmit={handleSubmit}>
+      <input required type="text" value={nuevoNombre} placeholder="Nombre del Articulo" onChange={(e) => setNuevoNombre(e.target.value)}/>
+      <input required type="text" value={nuevoColor} placeholder="Color" onChange={(e) => setNuevoColor(e.target.value)}/>
+      <input required type="number" min="2000" max="2023" id="validacionModelo" value={nuevoModelo} placeholder="Modelo" onChange={(e) => setNuevoModelo(e.target.value)}/>
       <button onClick={() => {agregarArticulo(nuevoNombre, nuevoColor, nuevoModelo)}}>Agregar</button>
-    </div>
+    </form>
 
     
     <form onSubmit={handleSubmit}>
-      <input type="text" ref={nombreInput} value={productoSeleccionado.nombre} placeholder="Nombre del Articulo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, nombre: e.target.value})}/>
-      <input type="text" ref={colorInput} value={productoSeleccionado.color} placeholder="Color" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, color: e.target.value})}/>
-      <input type="text" ref={modeloInput} value={productoSeleccionado.modelo} placeholder="Modelo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, modelo: e.target.value})}/>
+      <input required type="text" ref={nombreInput} value={productoSeleccionado.nombre} placeholder="Nombre del Articulo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, nombre: e.target.value})}/>
+      <input required type="text" ref={colorInput} value={productoSeleccionado.color} placeholder="Color" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, color: e.target.value})}/>
+      <input required type="email" ref={modeloInput} value={productoSeleccionado.modelo} placeholder="Modelo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, modelo: e.target.value})}/>
         
       <button type="submit" onClick={() => editarArticulo(productoSeleccionado)}>Actualizar</button>
     </form>
+
+    <span>{validacion}</span>
+
     </>
    )
 }
