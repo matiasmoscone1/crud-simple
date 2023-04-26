@@ -95,20 +95,16 @@ function App() {
     modeloInput.current.value = "";
   }
 
- 
-  
 
 
   return (
-    <> 
+    <div className="main-container"> 
     
-    <h2>Hola</h2>
-
-    <div>
-        <table border={1}>
+    <div className="table-container">
+        <table border={1} className="table-crud">
           <thead>
             <tr>
-              <th>Id</th>
+              <th className="table-id">Id</th>
               <th>Articulo</th>
               <th>Color</th>
               <th>Modelo</th>
@@ -119,13 +115,13 @@ function App() {
             {
               productos.map((producto) => {
                 return(<tr key={producto.id}>
-                  <td>{producto.id}</td>
+                  <td className="table-id">{producto.id}</td>
                   <td>{producto.nombre}</td>
                   <td>{producto.color}</td>
                   <td>{producto.modelo}</td>
                   <td>
-                    <button onClick={() => {setProductoSeleccionado(producto)}}>Editar</button>
-                    <button onClick={() => removerArticulo(producto.id)}>Eliminar</button>
+                    <button onClick={() => {setProductoSeleccionado(producto)}}>✏️</button>
+                    <button onClick={() => removerArticulo(producto.id)}>🗑️</button>
                   </td>
                 </tr>)
               })
@@ -134,6 +130,8 @@ function App() {
         </table>
     </div>
     
+    <div className="form-container">
+
     <form onSubmit={handleSubmit}>
       <input required type="text" value={nuevoNombre} placeholder="Nombre del Articulo" onChange={(e) => setNuevoNombre(e.target.value)}/>
       <input required type="text" value={nuevoColor} placeholder="Color" onChange={(e) => setNuevoColor(e.target.value)}/>
@@ -142,7 +140,7 @@ function App() {
     </form>
 
     
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} >
       <input required type="text" ref={nombreInput} value={productoSeleccionado.nombre} placeholder="Nombre del Articulo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, nombre: e.target.value})}/>
       <input required type="text" ref={colorInput} value={productoSeleccionado.color} placeholder="Color" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, color: e.target.value})}/>
       <input required type="number" min="2000" max="2023" id="validacionModelo" ref={modeloInput} value={productoSeleccionado.modelo} placeholder="Modelo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, modelo: e.target.value})}/>
@@ -152,7 +150,10 @@ function App() {
 
     <span>{validacion}</span>
 
-    </>
+    </div>
+
+
+    </div>
    )
 }
 

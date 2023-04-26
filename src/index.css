@@ -1,0 +1,84 @@
+
+/* Reseteando estilos */
+*, 
+::after, 
+::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Contenedor princiapl */
+.main-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Contenedor tabla */
+.table-container{
+    padding: 2em;
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo tabla */
+.table-crud{
+    width: 50em;
+    height: 10em;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+/* Estilo botones tabla */
+.table-crud button{
+    cursor: pointer;
+}
+
+/* Estilo de la celda id de la tabla */
+.table-id{
+    width: 10px;
+    height: 10px;
+}
+
+/* Padding a las celdas de la tabla*/
+td{
+    padding: 0.5em;
+}
+
+
+/* Contenedor formularios */
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2em 2em 2em;
+    gap: 1.5em;
+    width: inherit;
+}
+
+/* Estilos del los formularios */
+.form-container form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.form-container input{
+    width: 15em;
+    height: 2em;
+}
+
+.form-container button{
+    width: 5em;
+    height: 2em;
+    cursor: pointer;
+}
+
+
