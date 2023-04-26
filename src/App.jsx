@@ -75,8 +75,7 @@ function App() {
 
     var input = document.getElementById("validacionModelo");
     input.oninvalid = (e) => e.target.setCustomValidity("El modelo debe ser entre 2000 y 2023");
-    
-    e.preventDefault();
+   
   }
 
   const editarArticulo = (producto) => {
