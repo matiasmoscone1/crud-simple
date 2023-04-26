@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
 
 const dbProductos = [{
@@ -64,6 +64,8 @@ function App() {
       setNuevoNombre("");
       setNuevoColor("");
       setNuevoModelo("");
+      const formulario = document.getElementById("formulario");
+      formulario.setAttribute("novalidate", true);
     }else{
       setValidacion("Debe completar todos los campos antes de agregar un producto");
       setTimeout(() => {
@@ -74,6 +76,7 @@ function App() {
     var input = document.getElementById("validacionModelo");
     input.oninvalid = (e) => e.target.setCustomValidity("El modelo debe ser entre 2000 y 2023");
     
+    e.preventDefault();
   }
 
   const editarArticulo = (producto) => {
@@ -94,7 +97,6 @@ function App() {
     colorInput.current.value = "";
     modeloInput.current.value = "";
   }
-
 
 
   return (
@@ -132,11 +134,12 @@ function App() {
     
     <div className="form-container">
 
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id="formulario">
       <input required type="text" value={nuevoNombre} placeholder="Nombre del Articulo" onChange={(e) => setNuevoNombre(e.target.value)}/>
       <input required type="text" value={nuevoColor} placeholder="Color" onChange={(e) => setNuevoColor(e.target.value)}/>
       <input required type="number" min="2000" max="2023" id="validacionModelo" value={nuevoModelo} placeholder="Modelo" onChange={(e) => setNuevoModelo(e.target.value)}/>
-      <button type="button" onClick={() => {agregarArticulo(nuevoNombre, nuevoColor, nuevoModelo)}}>Agregar</button>
+      <button type="submit" onClick={() => {agregarArticulo(nuevoNombre, nuevoColor, nuevoModelo)}}>Agregar</button>
+      
     </form>
 
     
@@ -149,7 +152,7 @@ function App() {
     </form>
 
     <span>{validacion}</span>
-
+    
     </div>
 
 
