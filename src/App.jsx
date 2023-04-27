@@ -80,6 +80,7 @@ function App() {
 
   const editarArticulo = (producto) => {
 
+
     const index = productos.findIndex((producto) => producto.id === productoSeleccionado.id);
 
     const nuevosProductos = [...productos];
@@ -97,6 +98,26 @@ function App() {
     modeloInput.current.value = "";
   }
 
+
+  const activarInputsActualizar = () => {
+    const form = document.getElementById("formulario-para-actualizar");
+
+    const inputs = form.querySelectorAll("input");
+    inputs.forEach((input) => {
+      input.removeAttribute("disabled");
+    });
+  }
+
+  const desactivarInputsActualizar = () => {
+    const form = document.getElementById("formulario-para-actualizar");
+
+    const inputs = form.querySelectorAll("input");
+    inputs.forEach((input) => {
+      input.setAttribute("disabled", true);
+    });
+  }
+
+ 
 
   return (
     <div className="main-container"> 
@@ -121,7 +142,7 @@ function App() {
                   <td>{producto.color}</td>
                   <td>{producto.modelo}</td>
                   <td>
-                    <button onClick={() => {setProductoSeleccionado(producto)}}>✏️</button>
+                    <button onClick={() => {setProductoSeleccionado(producto); activarInputsActualizar()}}>✏️</button>
                     <button onClick={() => removerArticulo(producto.id)}>🗑️</button>
                   </td>
                 </tr>)
@@ -141,14 +162,14 @@ function App() {
       
     </form>
 
-    
-    <form onSubmit={handleSubmit} >
-      <input required type="text" ref={nombreInput} value={productoSeleccionado.nombre} placeholder="Nombre del Articulo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, nombre: e.target.value})}/>
-      <input required type="text" ref={colorInput} value={productoSeleccionado.color} placeholder="Color" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, color: e.target.value})}/>
-      <input required type="number" min="2000" max="2023" id="validacionModelo" ref={modeloInput} value={productoSeleccionado.modelo} placeholder="Modelo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, modelo: e.target.value})}/>
+    <form onSubmit={handleSubmit} id="formulario-para-actualizar">
+      <input className="formulario-actualziar" required disabled type="text" ref={nombreInput} value={productoSeleccionado.nombre} placeholder="Nombre del Articulo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, nombre: e.target.value})}/>
+      <input className="formulario-actualziar" required disabled type="text" ref={colorInput} value={productoSeleccionado.color} placeholder="Color" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, color: e.target.value})}/>
+      <input className="formulario-actualziar" required disabled type="number" min="2000" max="2023" id="validacionModelo" ref={modeloInput} value={productoSeleccionado.modelo} placeholder="Modelo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, modelo: e.target.value})}/>
         
-      <button type="submit" onClick={() => editarArticulo(productoSeleccionado)}>Actualizar</button>
+      <button type="submit" onClick={() => {editarArticulo(productoSeleccionado); desactivarInputsActualizar()}}>Actualizar</button>
     </form>
+
 
     <span>{validacion}</span>
     
