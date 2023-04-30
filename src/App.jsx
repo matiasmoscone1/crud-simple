@@ -1,6 +1,8 @@
 import { useState, useRef} from "react"
 
 
+
+//Base de datos inicial, estatica.
 const dbProductos = [{
     id: 1,
     nombre: "Teclado",
@@ -30,25 +32,31 @@ const dbProductos = [{
 
 function App() {
  
+  //Declaracion de variables de productos y producto para editar. 
   const [productos, setProductos] = useState(dbProductos);
   const [productoSeleccionado, setProductoSeleccionado] = useState({});
 
+  //Declaracion de variables para agregar un nuevo producto a la tabla.
   const [nuevoNombre, setNuevoNombre] = useState("");
   const [nuevoColor, setNuevoColor] = useState("");
   const [nuevoModelo, setNuevoModelo] = useState("");
 
+  //Declaracion de variable de validacion al agregar producto.
   const [validacion, setValidacion] = useState("");
 
+  //Declaracion de variables de hook useRef para borrar los inputs al agregar un nuevo producto.
   const nombreInput = useRef(null);
   const colorInput = useRef(null);
   const modeloInput = useRef(null);
   
-
+  //Funcion para eliminar un producto de la tabla (pasado el id del producto como parametro al
+  //apretar el boton elimnar).
   const removerArticulo = (id) => {
     setProductos(productos.filter((producto) => producto.id !== id));
   }
 
-
+  //Funcion para agregar articulo, recibe los nuevos estados de las variables declaradas anteriormente
+  //y las agrega a un nuevo objeto producto, despues agrega el producto al array de la base de datos
   const agregarArticulo = (nuevoNombre, nuevoColor, nuevoModelo) => {
     const idNueva = new Date().getTime(); 
 
@@ -64,15 +72,20 @@ function App() {
       setNuevoNombre("");
       setNuevoColor("");
       setNuevoModelo("");
+      //Toma la id del formulario de agregar producto (con vanilla js) y le "saca" 
+      //la validacion del atributo validate.
       const formulario = document.getElementById("formulario");
       formulario.setAttribute("novalidate", true);
     }else{
+      //Setea el estado de validacion al no completar todos los campos y agrega un setTimeout 
+      //que dura 3 segundos y limpia de nuevo el estado de la validacion.
       setValidacion("Debe completar todos los campos antes de agregar un producto");
       setTimeout(() => {
         setValidacion("");
       }, 3000);
     }
 
+    //Variable para manipular el titulo de la validacion del modelo nuevo, con vanilla js 
     var input = document.getElementById("validacionModelo");
     input.oninvalid = (e) => e.target.setCustomValidity("El modelo debe ser entre 2000 y 2023");
    
