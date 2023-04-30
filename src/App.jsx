@@ -91,19 +91,24 @@ function App() {
    
   }
 
+  //Funcion para editar articulo, pasa el articulo seleccionado por parametro.
   const editarArticulo = (producto) => {
-
-
+    //Busca el prod. en la tavla, si tiene el mismo indice que el producto seleccionado
     const index = productos.findIndex((producto) => producto.id === productoSeleccionado.id);
 
+    //Clona la base de datos en un nuevo array.
     const nuevosProductos = [...productos];
 
+    //Reemplaza el producto que se encontraba anteiormente en el indice especifico y lo reemplaza
+    //por el nuevo producto (editado).
     nuevosProductos[index] = producto;
 
+    //Actualiza los estados de la bdd y el producto seleccionado.
     setProductos(nuevosProductos);
     setProductoSeleccionado({});
   }
 
+  //Funcion que limpia el formulario con los useRef.
   const handleSubmit = (e) => {
     e.preventDefault();
     nombreInput.current.value = "";
@@ -111,16 +116,19 @@ function App() {
     modeloInput.current.value = "";
   }
 
-
+  //Funcion que al editar un prodcuto, habilita los inputs para modificar dicho contenido del producto. 
   const activarInputsActualizar = () => {
     const form = document.getElementById("formulario-para-actualizar");
 
+    //con vanilla js accede a todos los inputs del formulario y les remueve el atributo disabled.
     const inputs = form.querySelectorAll("input");
     inputs.forEach((input) => {
       input.removeAttribute("disabled");
     });
   }
 
+  //Hace lo mismo que la funcion anterior de activarInputsActualizar pero esta vez pone los
+  //atributos de los inputs en disabled (para que no se puedan utlizar a menos q le den editar producto).
   const desactivarInputsActualizar = () => {
     const form = document.getElementById("formulario-para-actualizar");
 
