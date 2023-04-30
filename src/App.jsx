@@ -141,8 +141,12 @@ function App() {
  
 
   return (
+    
+    /* Contenedor principal */
     <div className="main-container"> 
     
+    
+    {/* Tabla completa que recorre el array de la base de datos y agrega cada producto en una fila*/}
     <div className="table-container">
         <table border={1} className="table-crud">
           <thead>
@@ -173,25 +177,27 @@ function App() {
         </table>
     </div>
     
+    {/* Contenedor de formularios */}
     <div className="form-container">
-
+    
+    {/* Formulario para agregar productos, setea los nuevos estados con los cambios en los respectivos inputs
+    y al hacer click en el boton agregar, llama a la funcion agregar articulo pasandole por parametro cada estado*/}
     <form onSubmit={handleSubmit} id="formulario">
       <input required type="text" value={nuevoNombre} placeholder="Nombre del Articulo" onChange={(e) => setNuevoNombre(e.target.value)}/>
       <input required type="text" value={nuevoColor} placeholder="Color" onChange={(e) => setNuevoColor(e.target.value)}/>
       <input required type="number" min="2000" max="2023" id="validacionModelo" value={nuevoModelo} placeholder="Modelo" onChange={(e) => setNuevoModelo(e.target.value)}/>
       <button type="submit" onClick={() => {agregarArticulo(nuevoNombre, nuevoColor, nuevoModelo)}}>Agregar</button>
-      
     </form>
 
+    {/* Formulario para editar producto, le pasa por parametro el producto seleccionado con los nuevos valores de los inputs*/}
     <form onSubmit={handleSubmit} id="formulario-para-actualizar">
       <input className="formulario-actualziar" required disabled type="text" ref={nombreInput} value={productoSeleccionado.nombre} placeholder="Nombre del Articulo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, nombre: e.target.value})}/>
       <input className="formulario-actualziar" required disabled type="text" ref={colorInput} value={productoSeleccionado.color} placeholder="Color" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, color: e.target.value})}/>
       <input className="formulario-actualziar" required disabled type="number" min="2000" max="2023" id="validacionModelo" ref={modeloInput} value={productoSeleccionado.modelo} placeholder="Modelo" onChange={(e) => setProductoSeleccionado({...productoSeleccionado, modelo: e.target.value})}/>
-        
       <button type="submit" onClick={() => {editarArticulo(productoSeleccionado); desactivarInputsActualizar()}}>Actualizar</button>
     </form>
 
-
+    {/* Validacion para los formularios, es un estado que dura 3 segundos por la funcion setTimeout agregada anteriormente */}
     <span>{validacion}</span>
     
     </div>
